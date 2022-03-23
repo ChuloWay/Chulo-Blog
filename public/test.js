@@ -10,3 +10,10 @@ BlogPost.create({
     console.log(error,blogpost);
 }
 )
+BlogPost.create({
+    title: 'This Is a second post for my MongoDB',
+    body: 'Hello this is ebuka okoye victor, i am a Software Engineer'
+},(error, blogpost) => {
+    console.log(error,blogpost);
+}
+)
