@@ -6,8 +6,9 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect('mongodb://localhost/my_database', { useNewUrlParser: true });
+const BlogPost = require('./public/assets/models/BlogPost')
 
 app.set('view engine', 'ejs');
 
@@ -18,9 +19,13 @@ app.listen(4000, () => {
     console.log('App Listening On Port 4000!!');
 })
 
-app.get('/', (req, res) => {
+app.get('/', async(req, res) => {
+    const blogposts = await BlogPost.find({})
     // res.sendFile(path.resolve(__dirname, 'pages/index.html'))
-    res.render('index')
+    res.render('index',{
+        blogposts
+    })
+    console.log(blogposts);
 })
 app.get('/about', (req, res) => {
     // res.sendFile(path.resolve(__dirname, 'pages/about.html'))
@@ -39,7 +44,11 @@ app.get('/posts/new', (req, res) => {
     res.render('create')
 
 })
-app.post('/posts/store',(req,res) => {
-    console.log(req.body)
-    res.redirect('/')
+app.post('/posts/store', (req, res) => {
+    //new post to be stored in database with user input(browser data)
+    BlogPost.create(req.body, (error, blogpost) => {
+        console.log(req.body);
+        res.redirect('/')
+    })
+
 })
