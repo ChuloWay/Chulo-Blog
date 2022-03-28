@@ -3,23 +3,25 @@
   <div class="row gx-4 gx-lg-5 justify-content-center">
     <div class="col-md-10 col-lg-8 col-xl-7">
       <!-- Post preview-->
+      <% for (let i = 0 ; i < blogposts.length; i++;){ %>
       <div class="post-preview">
         <a href="post">
           <h2 class="post-title">
-            Man must explore, and this is exploration at its greatest
+           <%= blogposts[i].title %> 
           </h2>
           <h3 class="post-subtitle">
-            Problems look mighty small from 150 miles up
+            <%= blogposts[i].body %> 
           </h3>
         </a>
         <p class="post-meta">
           Posted by
-          <a href="#!">Start Bootstrap</a>
+          <a href="#!">Start Victor</a>
           on September 24, 2021
         </p>
       </div>
       <!-- Divider-->
       <hr class="my-4" />
+      <% } %>
       <!-- Post preview-->
       <div class="post-preview">
         <a href="post"
