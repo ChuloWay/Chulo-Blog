@@ -19,10 +19,10 @@ app.listen(4000, () => {
     console.log('App Listening On Port 4000!!');
 })
 
-app.get('/', async(req, res) => {
+app.get('/', async (req, res) => {
     const blogposts = await BlogPost.find({})
     // res.sendFile(path.resolve(__dirname, 'pages/index.html'))
-    res.render('index',{
+    res.render('index', {
         blogposts
     })
     // console.log(blogposts);
@@ -31,10 +31,10 @@ app.get('/about', (req, res) => {
     // res.sendFile(path.resolve(__dirname, 'pages/about.html'))
     res.render('about')
 })
-app.get('/post/:id',async (req, res) => {
+app.get('/post/:id', async (req, res) => {
     const blogpost = await BlogPost.findById(req.params.id)
-   
-    res.render('post',{
+
+    res.render('post', {
         blogpost
     })
 })
@@ -48,11 +48,21 @@ app.get('/posts/new', (req, res) => {
     res.render('create')
 
 })
+
+const fileUpload = require('express-fileupload');
+const { error } = require('console');
+app.use(fileUpload())
+
+
 app.post('/posts/store', (req, res) => {
     //new post to be stored in database with user input(browser data)
-    BlogPost.create(req.body, (error, blogpost) => {
-        console.log(req.body);
-        res.redirect('/')
+    let image = req.files.image;
+    image.mv(path.resolve(__dirname, 'public/assets/img', image.name), async (error) => {
+        await BlogPost.create(req.body, (error, blogpost) => {
+            console.log(req.body);
+            res.redirect('/')
+        })
+
     })
 
 })
