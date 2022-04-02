@@ -50,19 +50,22 @@ app.get('/posts/new', (req, res) => {
 })
 
 const fileUpload = require('express-fileupload');
-const { error } = require('console');
+// const { error } = require('console');
 app.use(fileUpload())
 
 
 app.post('/posts/store', (req, res) => {
     //new post to be stored in database with user input(browser data)
     let image = req.files.image;
-    image.mv(path.resolve(__dirname, 'public/assets/img', image.name), async (error) => {
-        await BlogPost.create(req.body, (error, blogpost) => {
-            console.log(req.body);
-            res.redirect('/')
+    image.mv(path.resolve(__dirname, 'public/assets/img/', image.name), async (error) => {
+        await BlogPost.create({
+            ...req.body,
+            image: '/img/' + image.name 
         })
-
     })
-
+    console.log(req.body);
+    res.redirect('/')
 })
+
+    
+
