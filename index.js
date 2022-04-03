@@ -39,15 +39,17 @@ app.get('/post/:id', async (req, res) => {
     })
 })
 
+
 app.get('/contact', (req, res) => {
     // res.sendFile(path.resolve(__dirname, 'pages/contact.html'))
     res.render('contact')
 
 })
-app.get('/posts/new', (req, res) => {
-    res.render('create')
 
-})
+const newPostController = require('./controllers/newPost')
+
+app.get('/posts/new', newPostController)
+
 
 const fileUpload = require('express-fileupload');
 // const { error } = require('console');
@@ -60,12 +62,17 @@ app.post('/posts/store', (req, res) => {
     image.mv(path.resolve(__dirname, 'public/assets/img/', image.name), async (error) => {
         await BlogPost.create({
             ...req.body,
-            image: '/img/' + image.name 
+            image: '/assets/img/' + image.name 
         })
     })
     console.log(req.body);
     res.redirect('/')
 })
-
-    
-
+app.use('/posts/store/', validateMiddleWare)
+// Middleware created for user form validation in blogpost.create
+    const validateMiddleWare = (req,res,next)=>{
+        if(req.files == null || req.body == null || req.title == null){
+            return res.redirect('/posts/new')
+        }
+        next()
+    }
