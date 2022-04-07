@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.connect('mongodb://localhost/my_database', { useNewUrlParser: true });
-const BlogPost = require('./public/assets/models/BlogPost')
+
 
 app.set('view engine', 'ejs');
 
@@ -19,32 +19,23 @@ app.listen(4000, () => {
     console.log('App Listening On Port 4000!!');
 })
 
-app.get('/', async (req, res) => {
-    const blogposts = await BlogPost.find({})
-    // res.sendFile(path.resolve(__dirname, 'pages/index.html'))
-    res.render('index', {
-        blogposts
-    })
-    // console.log(blogposts);
-})
-app.get('/about', (req, res) => {
-    // res.sendFile(path.resolve(__dirname, 'pages/about.html'))
-    res.render('about')
-})
-app.get('/post/:id', async (req, res) => {
-    const blogpost = await BlogPost.findById(req.params.id)
 
-    res.render('post', {
-        blogpost
-    })
-})
+const newIndexController = require('./controllers/newIndex')
+app.get('/', newIndexController)
+
+const newAboutController = require('./controllers/newAbout')
+
+app.get('/about', newAboutController)
+
+const getPostController = require('./controllers/getPost')
+app.get('/post/:id',getPostController )
 
 
-app.get('/contact', (req, res) => {
-    // res.sendFile(path.resolve(__dirname, 'pages/contact.html'))
-    res.render('contact')
 
-})
+const newContactController = require('./controllers/newcontacts')
+
+app.get('/contact', newContactController)
+
 
 const newPostController = require('./controllers/newPost')
 
@@ -56,19 +47,8 @@ const fileUpload = require('express-fileupload');
 app.use(fileUpload())
 
 
-app.post('/posts/store', (req, res) => {
-    //new post to be stored in database with user input(browser data)
-    let image = req.files.image;
-    image.mv(path.resolve(__dirname, 'public/assets/img/', image.name), async (error) => {
-        await BlogPost.create({
-            ...req.body,
-            image: '/assets/img/' + image.name 
-        })
-    })
-    console.log(req.body);
-    res.redirect('/')
-})
-app.use('/posts/store/', validateMiddleWare)
+
+
 // Middleware created for user form validation in blogpost.create
     const validateMiddleWare = (req,res,next)=>{
         if(req.files == null || req.body == null || req.title == null){
@@ -76,3 +56,12 @@ app.use('/posts/store/', validateMiddleWare)
         }
         next()
     }
+
+    app.use('/posts/store/',validateMiddleWare)
+
+
+    const storePostController = require('./controllers/storePost')
+    app.post('/posts/store', s) 
+        //new post to be stored in database with user input(browser data)
+   
+
