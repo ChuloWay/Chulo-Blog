@@ -1,5 +1,4 @@
-const BlogPost = require('..models/BlogPost.js')
-const { builtinModules } = require('module')
+const BlogPost = require('../public/assets/models/BlogPost')
 const path = require('path')
 
 module.exports = (req, res) => {
