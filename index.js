@@ -15,13 +15,13 @@ app.set('view engine', 'ejs');
 const validateMiddleWare = require('./middleware/validationMiddleware')
 
 
-    
+
 
 
 
 app.use(express.static('public'))
 app.use(fileUpload())
-app.use('/posts/store/',validateMiddleWare)
+app.use('/posts/store/', validateMiddleWare)
 
 app.listen(4000, () => {
     console.log('App Listening On Port 4000!!');
@@ -30,7 +30,7 @@ const newPostController = require('./controllers/newPost')
 const homeController = require('./controllers/homepage')
 const storePostController = require('./controllers/storePost')
 const getPostController = require('./controllers/getPost')
-// const newUserController = require('./controllers/')
+const newUserController = require('./controllers/newUser')
 // const storeUserController = require('./controllers/')
 const userAbout = require('./controllers/newAbout')
 const getContact = require('./controllers/newcontacts')
@@ -42,7 +42,8 @@ app.get('/posts/new', newPostController)
 app.get('/post/:id', getPostController)
 
 app.get('/contact', getContact)
-app.post('/posts/store', storePostController )
+app.post('/posts/store', storePostController)
+app.get('/auth/register', newUserController)
 
 
 
@@ -56,9 +57,9 @@ app.post('/posts/store', storePostController )
 
 
 // Middleware created for user form validation in blogpost.create
-   
 
-    
+
+
 
 
 
