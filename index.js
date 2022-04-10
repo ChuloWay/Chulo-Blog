@@ -13,6 +13,7 @@ mongoose.connect('mongodb://localhost/my_database', { useNewUrlParser: true });
 const fileUpload = require('express-fileupload');
 app.set('view engine', 'ejs');
 const validateMiddleWare = require('./middleware/validationMiddleware')
+const expressSession = require('express-session')
 
 
 
@@ -22,6 +23,9 @@ const validateMiddleWare = require('./middleware/validationMiddleware')
 app.use(express.static('public'))
 app.use(fileUpload())
 app.use('/posts/store/', validateMiddleWare)
+app.use(expressSession({
+    secret:'God Is Great'
+}))
 
 app.listen(4000, () => {
     console.log('App Listening On Port 4000!!');
@@ -36,20 +40,26 @@ const userAbout = require('./controllers/newAbout')
 const getContact = require('./controllers/newcontacts')
 const loginController = require('./controllers/login')
 const loginUserController = require('./controllers/loginUser')
+const authMiddleware = require('./middleware/authMidlleware')
+const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticated')
 app.get('/', homeController)
 
 app.get('/about', userAbout)
-app.get('/posts/new', newPostController)
+app.get('/posts/new',authMiddleware, newPostController)
 
 app.get('/post/:id', getPostController)
 
 app.get('/contact', getContact)
-app.get('/auth/register', newUserController)
-app.get('/auth/login', loginController)
+app.get('/auth/register',redirectIfAuthenticatedMiddleware, newUserController)
+app.get('/auth/login',  redirectIfAuthenticatedMiddleware, loginController)
 
-app.post('/user/register', storeUserController)
-app.post('/posts/store', storePostController)
-app.post('/user/login', loginUserController)
+
+app.post('/user/register',redirectIfAuthenticatedMiddleware, storeUserController)
+app.post('/user/login',redirectIfAuthenticatedMiddleware, loginUserController)
+app.post('/posts/store',authMiddleware, storePostController)
+
+
+
 
 
 
