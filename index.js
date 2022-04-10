@@ -31,9 +31,11 @@ const homeController = require('./controllers/homepage')
 const storePostController = require('./controllers/storePost')
 const getPostController = require('./controllers/getPost')
 const newUserController = require('./controllers/newUser')
-// const storeUserController = require('./controllers/')
+const storeUserController = require('./controllers/storeUser')
 const userAbout = require('./controllers/newAbout')
 const getContact = require('./controllers/newcontacts')
+const loginController = require('./controllers/login')
+const loginUserController = require('./controllers/loginUser')
 app.get('/', homeController)
 
 app.get('/about', userAbout)
@@ -42,8 +44,12 @@ app.get('/posts/new', newPostController)
 app.get('/post/:id', getPostController)
 
 app.get('/contact', getContact)
-app.post('/posts/store', storePostController)
 app.get('/auth/register', newUserController)
+app.get('/auth/login', loginController)
+
+app.post('/user/register', storeUserController)
+app.post('/posts/store', storePostController)
+app.post('/user/login', loginUserController)
 
 
 
