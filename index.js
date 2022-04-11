@@ -14,8 +14,7 @@ const fileUpload = require('express-fileupload');
 app.set('view engine', 'ejs');
 const validateMiddleWare = require('./middleware/validationMiddleware')
 const expressSession = require('express-session')
-
-
+global.loggedIn = null;
 
 
 
@@ -26,6 +25,12 @@ app.use('/posts/store/', validateMiddleWare)
 app.use(expressSession({
     secret:'God Is Great'
 }))
+
+app.use("*", (req,res,next)=>{
+    loggedIn = req.session.userId;
+
+    next()
+})
 
 app.listen(4000, () => {
     console.log('App Listening On Port 4000!!');
@@ -55,10 +60,8 @@ app.get('/auth/login',  redirectIfAuthenticatedMiddleware, loginController)
 
 
 app.post('/user/register',redirectIfAuthenticatedMiddleware, storeUserController)
-app.post('/user/login',redirectIfAuthenticatedMiddleware, loginUserController)
 app.post('/posts/store',authMiddleware, storePostController)
-
-
+app.post('/user/login',redirectIfAuthenticatedMiddleware, loginUserController)
 
 
 
