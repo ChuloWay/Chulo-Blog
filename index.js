@@ -1,3 +1,4 @@
+const flash = require('connect-flash');
 
 const express = require('express');
 //const res = require('express/lib/response');
@@ -16,7 +17,19 @@ const validateMiddleWare = require('./middleware/validationMiddleware')
 const expressSession = require('express-session')
 
 
+
 global.loggedIn = null;
+
+app.use(expressSession({
+    secret:'God Is Great'
+}))
+
+
+app.use("*", (req,res,next)=>{
+    global.loggedIn = req.session.userId;
+
+    next()
+})
 
 
 
@@ -24,15 +37,9 @@ global.loggedIn = null;
 app.use(express.static('public'))
 app.use(fileUpload())
 app.use('/posts/store/', validateMiddleWare)
-app.use(expressSession({
-    secret:'God Is Great'
-}))
 
-app.use("*", (req,res,next)=>{
-    loggedIn = req.session.userId;
 
-    next()
-})
+app.use(flash())
 
 app.listen(4000, () => {
     console.table({

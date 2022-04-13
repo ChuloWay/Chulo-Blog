@@ -30,6 +30,7 @@
     "mongoose-unique-validator": "^3.0.0"
   },
   "devDependencies": {
+    "@types/connect-flash": "^0.0.37",
     "nodemon": "^2.0.15"
   }
 }
