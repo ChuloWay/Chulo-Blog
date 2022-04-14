@@ -1,66 +1,65 @@
-const flash = require('connect-flash');
-
 const express = require('express');
-//const res = require('express/lib/response');
-const app = express();
-// const path = require('path');
-const ejs = require('ejs');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+
 mongoose.connect('mongodb://localhost/my_database', { useNewUrlParser: true });
-// const BlogPost = require('./public/assets/models/BlogPost')
-const fileUpload = require('express-fileupload');
-app.set('view engine', 'ejs');
+
+const app = express()
+const ejs = require('ejs')
+
+const fileUpload = require('express-fileupload')
 const validateMiddleWare = require('./middleware/validationMiddleware')
 const expressSession = require('express-session')
+const authMiddleware = require('./middleware/authMidlleware')
+const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticated')
+const flash = require('connect-flash')
+const bodyParser = require('body-parser')
 
+//const res = require('express/lib/response');
 
+// const path = require('path');
+app.set('view engine', 'ejs');
 
 global.loggedIn = null;
 
+app.use(express.static('public'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(fileUpload())
+app.use('/posts/store/', validateMiddleWare)
 app.use(expressSession({
     secret:'God Is Great'
 }))
-
-
+app.use(flash())
 app.use("*", (req,res,next)=>{
-    global.loggedIn = req.session.userId;
-
+    loggedIn = req.session.userId;
     next()
 })
-
-
-
-
-app.use(express.static('public'))
-app.use(fileUpload())
-app.use('/posts/store/', validateMiddleWare)
-
-
-app.use(flash())
-
 app.listen(4000, () => {
     console.table({
         Port:'App Listening On Port 4000!',
         Database: 'Connected To MongoDB'
     });
 })
+
+
+
 const newPostController = require('./controllers/newPost')
 const homeController = require('./controllers/homepage')
 const storePostController = require('./controllers/storePost')
 const getPostController = require('./controllers/getPost')
 const newUserController = require('./controllers/newUser')
 const storeUserController = require('./controllers/storeUser')
-const userAbout = require('./controllers/newAbout')
-const getContact = require('./controllers/newcontacts')
 const loginController = require('./controllers/login')
 const loginUserController = require('./controllers/loginUser')
-const authMiddleware = require('./middleware/authMidlleware')
-const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticated')
 const logoutController = require('./controllers/logout')
+const userAbout = require('./controllers/newAbout')
+const getContact = require('./controllers/newcontacts')
 const notFoundController = require('./controllers/notfound')
+
+
+
+
+
 app.get('/', homeController)
 
 app.get('/about', userAbout)
