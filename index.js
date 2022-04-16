@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-mongoose.connect('', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://Okoyevictor:Godisgreat25@cluster0.6hrii.mongodb.net/test', { useNewUrlParser: true });
 
 const app = express()
 const ejs = require('ejs')
