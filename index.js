@@ -34,6 +34,11 @@ app.use("*", (req,res,next)=>{
     loggedIn = req.session.userId;
     next()
 })
+let port = process.env.PORT;
+if(port == null || port == ""){
+    port = 4000;
+}
+
 app.listen(4000, () => {
     console.table({
         Port:'App Listening On Port 4000!',
