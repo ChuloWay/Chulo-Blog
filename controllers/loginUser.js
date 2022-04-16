@@ -19,7 +19,7 @@ module.exports = (req,res) =>{
         }
         else{
             errors: req.flash('validationErrors')
-            console.log("/auth/login::",user)
+            console.log("/auth/login:", user)
             res.redirect('/auth/login')
         }
     })
