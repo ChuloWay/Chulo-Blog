@@ -1,7 +1,8 @@
+require('dotenv').config()
 const express = require('express');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://Okoyevictor:Godisgreat25@cluster0.6hrii.mongodb.net/test', { useNewUrlParser: true });
+mongoose.connect(process.env.DBHOST, { useNewUrlParser: true });
 
 const app = express()
 const ejs = require('ejs')
@@ -27,21 +28,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(fileUpload())
 app.use('/posts/store/', validateMiddleWare)
 app.use(expressSession({
-    secret:'God Is Great'
+    secret:process.env.SECRET
 }))
 app.use(flash())
 app.use("*", (req,res,next)=>{
     loggedIn = req.session.userId;
     next()
 })
-let port = process.env.PORT;
-if(port == null || port == ""){
-    port = 4000;
-}
 
-app.listen(4000, () => {
+
+app.listen(process.env.PORT, () => {
     console.table({
-        Port:'App Listening On Port 4000!',
+        Port:`App Listening On Port ${process.env.PORT}!`,
         Database: 'Connected To MongoDB'
     });
 })
