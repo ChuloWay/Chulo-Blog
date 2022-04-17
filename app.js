@@ -13,6 +13,7 @@ const expressSession = require('express-session')
 const authMiddleware = require('./middleware/authMidlleware')
 const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticated')
 const flash = require('connect-flash')
+
 const bodyParser = require('body-parser')
 
 //const res = require('express/lib/response');
