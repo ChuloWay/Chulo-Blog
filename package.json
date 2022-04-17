@@ -1,7 +1,7 @@
 {
   "name": "testblog",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Blog",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
@@ -15,7 +15,7 @@
   "author": "Okoye Victor",
   "license": "ISC",
   "engines": {
-    "node": "16.14.0"
+    "node":"16.14.0"
   },
   "bugs": {
     "url": "https://github.com/ChuloWay/TestBlog/issues"
