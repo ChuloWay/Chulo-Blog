@@ -15,13 +15,23 @@ module.exports = (req,res) =>{
                 else{
                     res.redirect('/auth/login')
                 }
+
             })
+
         }
         else{
             errors: req.flash('validationErrors')
             console.log("/auth/login:", user)
-            res.redirect('/auth/login')
+            res.redirect('/auth/login'),
+            {
+                //errors: req.session.validationErrors
+                errors: req.flash('validationErrors'),
+                username: username,
+                password: password
+            }
         }
     })
 }
+
+
     

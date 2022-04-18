@@ -27,9 +27,11 @@
           <div class="col-md-10 col-lg-8 col-xl-7">
             <h3>Welcome Back..</h3>
             
-            <div class="my-5">
+            <div class="my-5" id="yeah">
+              
              
-              <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="/user/login" method="POST" enctype="multipart/form-data">
+              <form id="contactForm"  data-sb-form-api-token="API_TOKEN" action="/user/login" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
+                
                 <label for="name">UserName</label>
                   <input
                     class="form-control"
@@ -38,6 +40,7 @@
                     type="text"
                     placeholder="UserName"
                     data-sb-validations="required"
+                    required
                   />
                  
                   <div
@@ -55,6 +58,7 @@
                     type="password"
                     placeholder="Password"
                     data-sb-validations="required"
+                    required
                   />
                  
                   <div
@@ -86,12 +90,38 @@
                     Error sending message!
                   </div>
                 </div>
+                <br>
                 <!-- Submit Button-->
                <div class="form-group">
-                   <button type="submit" class="btn btn-primary">Login</button>
+                   <button type="submit" value="Submit" class="btn btn-primary" id="button">Login</button>
                </div>
-                  
-            </input>
+
+               <script>
+                const user = document.getElementById("username")
+                const userPass = document.getElementById("password")
+                const button = document.getElementById("button")
+               
+                
+                
+                button.addEventListener("click", function(e){
+                  if(user.innerHTML == "" ){
+                
+                    alert("Missing Username");
+                  }
+                })
+
+                button.addEventListener("click", function(e){
+                  if(userPass.innerHTML == "" ){
+                
+                    alert("Missing Password");
+                  }
+                })
+                
+                
+                
+                
+                    </script>
+            
               </form>
             </div>
           </div>
@@ -102,5 +132,6 @@
     <%-include('layouts/footer');%> 
     <!-- Bootstrap core JS-->
     <%-include('layouts/scripts');%>
+   
   </body>
 </html>
