@@ -16,3 +16,6 @@ module.exports = (req,res) =>{
         password: password
     })
 }
+
+
+
