@@ -26,47 +26,45 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-7">
             <h3>Welcome Back..</h3>
-            
+
             <div class="my-5" id="yeah">
-              
-             
-              <form id="contactForm"  data-sb-form-api-token="API_TOKEN" action="/user/login" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
-                
+              <form
+                id="contactForm"
+                data-sb-form-api-token="API_TOKEN"
+                action="/user/login"
+                method="POST"
+                onforminput="return validateForm()"
+                enctype="multipart/form-data"
+              >
                 <label for="name">UserName</label>
-                  <input
-                    class="form-control"
-                    id="username"
-                    name="username"
-                    type="text"
-                    placeholder="UserName"
-                    data-sb-validations="required"
-                    required
-                  />
-                 
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="name:required"
-                  >
-                    A username is required.
-                  </div>
-                  <br>
-                  <label for="name">Password</label>
-                  <input
-                    class="form-control"
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    data-sb-validations="required"
-                    required
-                  />
-                 
-                  <div
-                    class="invalid-feedback"
-                    data-sb-feedback="name:required"
-                  >
-                    A password is required.
-                  </div>
+                <input
+                  class="form-control"
+                  id="username"
+                  name="username"
+                  type="text"
+                  placeholder="UserName"
+                  data-sb-validations="required"
+                  required
+                />
+
+                <div class="invalid-feedback" data-sb-feedback="name:required">
+                  A username is required.
+                </div>
+                <br />
+                <label for="name">Password</label>
+                <input
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  data-sb-validations="required"
+                  required
+                />
+
+                <div class="invalid-feedback" data-sb-feedback="name:required">
+                  A password is required.
+                </div>
                 <!-- Submit success message-->
                 <!---->
                 <!-- This is what your users will see when the form-->
@@ -90,38 +88,69 @@
                     Error sending message!
                   </div>
                 </div>
-                <br>
+                <br />
                 <!-- Submit Button-->
-               <div class="form-group">
-                   <button type="submit" value="Submit" class="btn btn-primary" id="button">Login</button>
-               </div>
+                <div class="form-group">
+                  <button
+                    type="submit"
+                    value="Submit"
+                    class="btn btn-primary"
+                    id="button"
+                  >
+                    Login
+                  </button>
+                </div>
 
-               <script>
-                const user = document.getElementById("username")
-                const userPass = document.getElementById("password")
-                const button = document.getElementById("button")
-               
-                
-                
-                button.addEventListener("click", function(e){
-                  if(user.innerHTML == "" ){
-                
-                    alert("Missing Username");
-                  }
-                })
+                <script>
+                  const user = document.getElementById("username");
+                  const userPass = document.getElementById("password");
+                  const button = document.getElementById("button");
+                  const form = document.getElementById("contactForm");
 
-                button.addEventListener("click", function(e){
-                  if(userPass.innerHTML == "" ){
-                
-                    alert("Missing Password");
-                  }
-                })
-                
-                
-                
-                
-                    </script>
-            
+                  const div = document.getElementById("yeah");
+                  const paraUser = document.createElement("p");
+                  const nodeUser = document.createTextNode(
+                    "Enter Correct Credentials"
+                  );
+                  paraUser.appendChild(nodeUser);
+                  paraUser.style.fontSize = "larger";
+                  paraUser.style.backgroundColor = "red";
+                  paraUser.style.borderRadius = "20px";
+                  paraUser.style.borderStyle = "solid"
+                  paraUser.style.textAlign = "center"
+
+                  // const paraPass = document.createElement("p");
+                  // const nodePass = document.createTextNode(
+                  //   "Enter Correct Password"
+                  // );
+                  // paraPass.appendChild(nodePass);
+                  // paraPass.style.fontSize = "larger";
+                  // paraPass.style.backgroundColor = "red";
+
+                  button.addEventListener("click", function (e) {
+                    if (user.innerHTML == "" || userPass.innerText == "" ) {
+                     div.prepend(paraUser);
+                      
+                    }
+                    
+                  });
+
+                  // button.addEventListener("click", function (e) {
+                  //   if (userPass.innerHTML == "" || userPass == null) {
+                  //    div.prepend(paraPass);
+                      
+                  //   }
+                  // });
+                 
+
+                  // function validateForm() {
+                  //   let x = document.forms["contactForm"]["username"].value;
+                  //   if (x == "") {
+                  //     div.prepend(paraUser);
+                  //     return false;
+                  //   }
+                  // }
+                </script>
               </form>
             </div>
           </div>
@@ -129,9 +158,8 @@
       </div>
     </main>
     <!-- Footer-->
-    <%-include('layouts/footer');%> 
+    <%-include('layouts/footer');%>
     <!-- Bootstrap core JS-->
     <%-include('layouts/scripts');%>
-   
   </body>
 </html>
