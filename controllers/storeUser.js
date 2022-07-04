@@ -13,5 +13,4 @@ module.exports = async (req, res) => {
       return res.redirect('/auth/register')
     }
     res.redirect('/')
-  
 }
